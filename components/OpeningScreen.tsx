@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button, Title, Text } from 'react-native-paper';
 import styles from './StyleSheet';
-import { getAuth, signOut } from 'firebase/auth';
 
 export default function OpeningScreen({ navigation  }: { navigation: any } ) {
 

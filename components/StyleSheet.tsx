@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -500,
+    marginTop: -300,
     paddingHorizontal: 20,
   },
   buttonContainer: {
@@ -35,11 +35,12 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   button: {
     width: '50%',
     height: 40,
+    justifyContent: 'space-between',
   },
   taskContainer: {
     backgroundColor: '#f0f0f0',
@@ -61,6 +62,21 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 50
   },
+  radioContainer: {
+    marginVertical: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#6200ee',
+  },
+  radioHeader: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  headerCell: {
+    textAlign: 'center'
+  },  
 });
 
 export default styles;

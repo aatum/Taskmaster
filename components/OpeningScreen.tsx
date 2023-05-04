@@ -2,12 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button, Title, Text } from 'react-native-paper';
 import styles from './StyleSheet';
+import { getAuth, signOut } from 'firebase/auth';
 
-interface OpeningScreenProps {
-  navigation: any;
-}
-
-const OpeningScreen: React.FC<OpeningScreenProps> = ({ navigation }) => {
+export default function OpeningScreen({ navigation  }: { navigation: any } ) {
 
   const handleTasksPress = () => {
     navigation.navigate('Add Task');
@@ -44,6 +41,7 @@ const OpeningScreen: React.FC<OpeningScreenProps> = ({ navigation }) => {
     return `${month} ${dayStr}, ${year}`;
   };
 
+
   const currentDate = getCurrentDate();
 
   return (
@@ -52,7 +50,7 @@ const OpeningScreen: React.FC<OpeningScreenProps> = ({ navigation }) => {
       <Title>Welcome to Taskmaster!</Title>
       <View style={styles.buttonContainer}>
         <Button mode='outlined' onPress={handleTasksPress}>
-          To tasks
+          Add tasks
         </Button>
         <Button mode='outlined' onPress={showTasksPress}>
           Show tasks
@@ -61,5 +59,3 @@ const OpeningScreen: React.FC<OpeningScreenProps> = ({ navigation }) => {
     </View>
   );
 };
-
-export default OpeningScreen;

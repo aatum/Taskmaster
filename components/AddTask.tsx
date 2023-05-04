@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
-import { TextInput, Button, Snackbar } from 'react-native-paper';
-import { getDatabase, ref, push, set, onValue } from "firebase/database";
+import { View, Text } from 'react-native';
+import { TextInput, Button, Snackbar, RadioButton } from 'react-native-paper';
+import { getDatabase, ref, push, set } from "firebase/database";
 import { firebaseConfig } from '../firebaseconfig';
 import { initializeApp } from "firebase/app";
 import styles from './StyleSheet';
@@ -9,6 +9,7 @@ import styles from './StyleSheet';
 const AddTaskPage = () => {
   const [taskName, setTaskName] = useState('');
   const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [priority, setPriority] = useState('low');
 
   const handleAddTask = async () => {
     if (taskName === '') {
@@ -20,7 +21,7 @@ const AddTaskPage = () => {
       const database = getDatabase(app);
       const tasksRef = ref(database, 'tasks');
       const newTaskRef = push(tasksRef);
-      await set(newTaskRef, { name: taskName });
+      await set(newTaskRef, { name: taskName, priority });
       setTaskName('');
       setSnackbarVisible(true);
     } catch (error) {
@@ -37,6 +38,20 @@ const AddTaskPage = () => {
           onChangeText={setTaskName}
           mode='outlined'
         />
+      </View>
+      <View style={{ marginBottom: 50 }}>
+      <Text style={styles.radioHeader}>Choose priority:</Text>
+        <RadioButton.Group onValueChange={newValue => setPriority(newValue)} value={priority}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RadioButton.Item label='Low' value='Low' />
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RadioButton.Item label='Medium' value='Medium' />
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RadioButton.Item label='High' value='High' />
+          </View>
+        </RadioButton.Group>
       </View>
       <Button
         mode='contained'
@@ -56,5 +71,6 @@ const AddTaskPage = () => {
     </View>
   );
 };
+
 
 export default AddTaskPage;

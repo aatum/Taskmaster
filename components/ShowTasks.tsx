@@ -4,6 +4,7 @@ import { DataTable, IconButton } from 'react-native-paper';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import { firebaseConfig } from '../firebaseconfig';
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import styles from './StyleSheet';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -14,18 +15,25 @@ const TaskListPage = () => {
     try {
       const app = initializeApp(firebaseConfig);
       const database = getDatabase(app);
-      const tasksRef = ref(database, 'tasks');
-      onValue(tasksRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          const tasksWithKeys = Object.entries(data).map(([key, value]) => ({
-            ...value as { name: string; priority: string },
-            key,
-          }));
+      const auth = getAuth();
+      const user = auth.currentUser;
+  
+      if (user) {
+        const tasksRef = ref(database, `users/${user.uid}/tasks`);
+        onValue(tasksRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            const tasksWithKeys = Object.entries(data).map(([key, value]) => ({
+              ...value as { name: string; priority: string },
+              key,
+            }));
           
-          setTasks(tasksWithKeys);
-        }
-      });
+            setTasks(tasksWithKeys);
+          }
+        });
+      } else {
+        console.log('User not authenticated');
+      }
     } catch (error) {
       console.log('ERROR!', error);
     }
@@ -35,10 +43,17 @@ const TaskListPage = () => {
     try {
       const app = initializeApp(firebaseConfig);
       const database = getDatabase(app);
-      const taskRef = ref(database, `tasks/${key}`);
-      await remove(taskRef);
-      console.log(`Task with key ${key} was successfully deleted.`);
-      setTasks(tasks.filter((task) => task.key !== key));
+      const auth = getAuth();
+      const user = auth.currentUser;
+  
+      if (user) {
+        const taskRef = ref(database, `users/${user.uid}/tasks/${key}`);
+        await remove(taskRef);
+        console.log(`Task with key ${key} was successfully deleted.`);
+        setTasks(tasks.filter((task) => task.key !== key));
+      } else {
+        console.log('User not authenticated');
+      }
     } catch (error) {
       console.error(`Error deleting task with key ${key}:`, error);
     }
@@ -70,6 +85,6 @@ const TaskListPage = () => {
       </DataTable>
     </View>
   );
-        }
+};
 
 export default TaskListPage;

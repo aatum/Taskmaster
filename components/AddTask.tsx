@@ -4,6 +4,7 @@ import { TextInput, Button, Snackbar, RadioButton } from 'react-native-paper';
 import { getDatabase, ref, push, set } from "firebase/database";
 import { firebaseConfig } from '../firebaseconfig';
 import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth';
 import styles from './StyleSheet';
 
 const AddTaskPage = () => {
@@ -15,21 +16,27 @@ const AddTaskPage = () => {
     if (taskName === '') {
       return;
     }
-
+  
     try {
       const app = initializeApp(firebaseConfig);
       const database = getDatabase(app);
-      const tasksRef = ref(database, 'tasks');
-      const newTaskRef = push(tasksRef);
-      await set(newTaskRef, { name: taskName, priority });
-      setTaskName('');
-      setSnackbarVisible(true);
+      const auth = getAuth();
+      const user = auth.currentUser;
+  
+      if (user) {
+        const tasksRef = ref(database, `users/${user.uid}/tasks`);
+        const newTaskRef = push(tasksRef);
+        await set(newTaskRef, { name: taskName, priority });
+        setTaskName('');
+        setSnackbarVisible(true);
+      } else {
+        console.log('User not authenticated');
+      }
     } catch (error) {
       console.log('ERROR!', error);
     }
   };
-
-  return (
+    return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
@@ -71,6 +78,5 @@ const AddTaskPage = () => {
     </View>
   );
 };
-
 
 export default AddTaskPage;

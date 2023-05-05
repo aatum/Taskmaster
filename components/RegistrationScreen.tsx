@@ -6,7 +6,7 @@ import { firebaseConfig } from '../firebaseconfig';
 import { initializeApp } from 'firebase/app';
 import styles from './StyleSheet';
 
-const RegistrationScreen = () => {
+  export default function LoginScreen({ navigation }: { navigation: any }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,6 +16,9 @@ const RegistrationScreen = () => {
       const auth = getAuth(app);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log(`User registered successfully: ${userCredential.user.email}`);
+      navigation.navigate('Login')
+      Alert.alert('Registration successful!')
+      
     } catch (error) {
       console.log('Error registering user:', error);
       Alert.alert('Error');
@@ -48,5 +51,3 @@ const RegistrationScreen = () => {
       </View>
   );
 };
-
-export default RegistrationScreen;

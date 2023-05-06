@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Provider as PaperProvider, DefaultTheme, MD2DarkTheme } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -24,20 +24,8 @@ export default function App() {
 
   function TabScreen() {
     return (
-      <Tab.Navigator>
-        <Tab.Screen
-          name='Home'
-          component={OpeningScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? 'home' : 'home-outline'}
-                size={26}
-                color='black'
-              />
-            ),
-          }}
-        />
+<Tab.Navigator
+>
         <Tab.Screen
           name='Add Task'
           component={TaskListScreen}
@@ -105,11 +93,10 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen
               name='Login'
-              options={{ title: 'Login', 
-            headerStyle: { backgroundColor: '#663399' },
-            headerTitleStyle: { color: 'white' },
-           }}
-            
+              options={{ title: 'Login',
+              headerStyle: { backgroundColor: '#663399' },
+              headerTitleStyle: { color: 'white' },
+            }}
             >
               {(props) => (
                 <LoginScreen {...props} onLoginSuccess={onLoginSuccess} />
@@ -118,12 +105,12 @@ export default function App() {
             <Stack.Screen
               name='Registration'
               component={RegistrationScreen}
-              options={{ title: 'Registration',            
+              options={{ title: 'Registration',          
               headerStyle: { backgroundColor: '#663399' },
               headerTitleStyle: { color: 'white' },
-             }}  
+              }}
             />
-          </Stack.Navigator>
+      </Stack.Navigator>          
         )}
         <StatusBar style='auto' />
       </NavigationContainer>

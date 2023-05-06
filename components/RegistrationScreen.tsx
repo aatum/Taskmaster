@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
-import { View, Alert } from 'react-native';
-import { Button, Title, Text, TextInput } from 'react-native-paper';
+import { View } from 'react-native';
+import { Button, Text, TextInput, Dialog, Portal, Provider } from 'react-native-paper';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseconfig';
 import { initializeApp } from 'firebase/app';
 import styles from './StyleSheet';
 
-export default function LoginScreen({ navigation }: { navigation: any }) {
+export default function RegistrationScreen({ navigation }: { navigation: any }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const showDialog = () => setVisible(true);
+
+  const hideDialog = () => setVisible(false);
 
   const register = async () => {
     if (password.length < 7) {
-      Alert.alert('Password must be at least 7 characters long.');
+      showDialog();
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert('Passwords do not match.');
+      showDialog();
       return;
     }
 
@@ -27,42 +32,58 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
       const auth = getAuth(app);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log(`User registered successfully: ${userCredential.user.email}`);
-      navigation.navigate('Login')
-      Alert.alert('Registration successful!')
-      
+      navigation.navigate('Login');
+      showDialog();
     } catch (error) {
       console.log('Error registering user:', error);
-      Alert.alert('Failed to register user.');
+      showDialog();
     }
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.inputContainer}
-        onChangeText={setEmail}
-        keyboardType='email-address'
-        label='Email'
-      />
-      <TextInput
-        style={styles.inputContainer}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-        label='Password'
-      />
-      <TextInput
-        style={styles.inputContainer}
-        onChangeText={setConfirmPassword}
-        secureTextEntry={true}
-        label='Confirm Password'
-      />
-      <Button
-        mode='contained'
-        onPress={register}
-        style={styles.button}
-        labelStyle={{ fontSize: 16}}>
-        Register
-      </Button>    
-    </View>
+    <Provider>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.inputContainer}
+          onChangeText={setEmail}
+          keyboardType='email-address'
+          label='Email'
+        />
+        <TextInput
+          style={styles.inputContainer}
+          onChangeText={setPassword}
+          secureTextEntry={true}
+          label='Password'
+        />
+        <TextInput
+          style={styles.inputContainer}
+          onChangeText={setConfirmPassword}
+          secureTextEntry={true}
+          label='Confirm Password'
+        />
+        <Button
+          mode='contained'
+          onPress={register}
+          style={styles.button}
+          labelStyle={{ fontSize: 16 }}>
+          Register
+        </Button>
+        <Portal>
+          <Dialog visible={visible} onDismiss={hideDialog}>
+            <Dialog.Title>Alert</Dialog.Title>
+            <Dialog.Content>
+              <Text>
+                {password.length < 7
+                  ? 'Password must be at least 7 characters long.'
+                  : 'Passwords do not match.'}
+              </Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={hideDialog}>OK</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      </View>
+    </Provider>
   );
 };

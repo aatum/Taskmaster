@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: 75,
   },
   taskName: {
-    fontSize: 16,
+    fontSize: 14,
   },
   dateText: {
     fontSize: 18,
@@ -88,6 +88,52 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  taskItem: {
+    flexDirection: 'row',
+    fontSize: 14,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  taskPriority: {
+    fontSize: 14,
+  },
+  taskDateTime: {
+    fontSize: 14,
+  },
+    modalContent: {
+      backgroundColor: 'white',
+      padding: 20,
+      borderRadius: 8,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+    modalSubtitle: {
+      fontSize: 16,
+      marginBottom: 5,
+      textTransform: 'capitalize',
+      color: '#663399',
+    },
+    closeButton: {
+      marginTop: 20,
+      alignSelf: 'flex-end',
+    },
+    closeButtonText: {
+      fontSize: 16,
+      color: '#663399',
+      fontWeight: 'bold',
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 });
 
 export default styles;

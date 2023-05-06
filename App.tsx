@@ -21,15 +21,6 @@ export default function App() {
     setLoggedIn(true);
   }
 
-  const theme = {
-    ...DefaultTheme,
-    roundness: 2,
-    colors: {
-      ...MD2DarkTheme.colors,
-      primary: '#3498db',
-      accent: '#f1c40f',
-    },
-  };
 
   function TabScreen() {
     return (
@@ -114,7 +105,11 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen
               name='Login'
-              options={{ title: 'Login' }}
+              options={{ title: 'Login', 
+            headerStyle: { backgroundColor: '#663399' },
+            headerTitleStyle: { color: 'white' },
+           }}
+            
             >
               {(props) => (
                 <LoginScreen {...props} onLoginSuccess={onLoginSuccess} />
@@ -123,7 +118,10 @@ export default function App() {
             <Stack.Screen
               name='Registration'
               component={RegistrationScreen}
-              options={{ title: 'Registration' }}
+              options={{ title: 'Registration',            
+              headerStyle: { backgroundColor: '#663399' },
+              headerTitleStyle: { color: 'white' },
+             }}  
             />
           </Stack.Navigator>
         )}

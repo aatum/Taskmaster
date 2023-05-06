@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: -300,
     paddingHorizontal: 20,
+    
   },
   buttonContainer: {
     marginTop: 20,
@@ -77,6 +78,16 @@ const styles = StyleSheet.create({
   headerCell: {
     textAlign: 'center'
   },  
+  addTaskButtonContainer: {  
+    marginTop: 40,
+    flexDirection: 'row',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  space: {
+    width: 20,
+    height: 20,
+  },
 });
 
 export default styles;

@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { View, TextInput, Alert } from 'react-native';
-import { Button, Title, Text } from 'react-native-paper';
+import { View, Alert } from 'react-native';
+import { Button, Title, Text, TextInput } from 'react-native-paper';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseconfig';
 import { initializeApp } from 'firebase/app';
 import styles from './StyleSheet';
 
-  export default function LoginScreen({ navigation }: { navigation: any }) {
+export default function LoginScreen({ navigation }: { navigation: any }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const register = async () => {
+    if (password.length < 7) {
+      Alert.alert('Password must be at least 7 characters long.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Passwords do not match.');
+      return;
+    }
+
     try {
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
@@ -21,7 +32,7 @@ import styles from './StyleSheet';
       
     } catch (error) {
       console.log('Error registering user:', error);
-      Alert.alert('Error');
+      Alert.alert('Failed to register user.');
     }
   };
 
@@ -29,17 +40,21 @@ import styles from './StyleSheet';
     <View style={styles.container}>
       <TextInput
         style={styles.inputContainer}
-        placeholder='Email'
+        onChangeText={setEmail}
         keyboardType='email-address'
-        autoCapitalize='none'
-        onChangeText={(text) => setEmail(text)}
+        label='Email'
       />
       <TextInput
         style={styles.inputContainer}
-        placeholder='Password'
+        onChangeText={setPassword}
         secureTextEntry={true}
-        autoCapitalize='none'
-        onChangeText={(text) => setPassword(text)}
+        label='Password'
+      />
+      <TextInput
+        style={styles.inputContainer}
+        onChangeText={setConfirmPassword}
+        secureTextEntry={true}
+        label='Confirm Password'
       />
       <Button
         mode='contained'
@@ -48,6 +63,6 @@ import styles from './StyleSheet';
         labelStyle={{ fontSize: 16}}>
         Register
       </Button>    
-      </View>
+    </View>
   );
 };

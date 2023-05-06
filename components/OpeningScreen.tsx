@@ -5,14 +5,6 @@ import styles from './StyleSheet';
 
 export default function OpeningScreen({ navigation  }: { navigation: any } ) {
 
-  const handleTasksPress = () => {
-    navigation.navigate('Add Task');
-  };
-
-  const showTasksPress = () => {
-    navigation.navigate('Task List');
-  };
-
   const getCurrentDate = () => {
     const dateObj = new Date();
     const month = dateObj.toLocaleString('default', { month: 'long' });
@@ -48,12 +40,6 @@ export default function OpeningScreen({ navigation  }: { navigation: any } ) {
       <Text style={styles.dateText}>{currentDate}</Text>
       <Title>Welcome to Taskmaster!</Title>
       <View style={styles.buttonContainer}>
-        <Button mode='outlined' onPress={handleTasksPress}>
-          Add tasks
-        </Button>
-        <Button mode='outlined' onPress={showTasksPress}>
-          Show tasks
-        </Button>
       </View>
     </View>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Alert } from 'react-native';
-import { Button, Title, Text } from 'react-native-paper';
+import { View, Alert } from 'react-native';
+import { Button, Title, Text, TextInput } from 'react-native-paper';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseconfig';
 import { initializeApp } from 'firebase/app';
@@ -33,31 +33,30 @@ import styles from './StyleSheet';
         <Title>Taskmaster</Title>
       <TextInput
         style={styles.inputContainer}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={setEmail}
         value={email}
-        placeholder='Email'
-        autoComplete='email'
         keyboardType='email-address'
+        label='Email'
       />
       <TextInput
         style={styles.inputContainer}
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={setPassword}
         value={password}
-        placeholder='Password'
         secureTextEntry={true}
+        label='Password'
       />
     <View style={styles.buttonContainer}>
         <Button
         mode='contained'
         onPress={handleLogin}
-        style={styles.button}
+        style={[styles.button, { marginRight: 5 }]}
         labelStyle={{ fontSize: 16 }}>
         Login
       </Button>
       <Button
         mode='contained'
         onPress={handleRegistration}
-        style={styles.button}
+        style={[styles.button, { marginLeft: 5 }]}
         labelStyle={{ fontSize: 16 }}>
         Register
       </Button>

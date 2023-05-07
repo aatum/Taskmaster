@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: -300,
     paddingHorizontal: 20,
-    
   },
   buttonContainer: {
     marginTop: 20,
@@ -42,6 +41,10 @@ const styles = StyleSheet.create({
     width: '50%',
     height: 40,
     justifyContent: 'space-between',
+  },
+  flatListButton: {
+    flexDirection: 'row',
+    marginLeft: 10, // Adjust this value as needed to control the spacing
   },
   taskContainer: {
     backgroundColor: '#f0f0f0',
@@ -133,7 +136,10 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-    },
+    },  
+      highPriorityTaskText: {
+        color: 'red',
+      },
 });
 
 export default styles;

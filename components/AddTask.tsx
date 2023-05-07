@@ -40,9 +40,6 @@ const AddTaskPage = () => {
         setTaskName('');
         setSnackbarVisible(true);
         setError('');
-        console.log(date);
-      } else {
-        console.log('User not authenticated');
       }
     } catch (error) {
     }
@@ -158,4 +155,3 @@ const AddTaskPage = () => {
     );
           }
   export default AddTaskPage;
-

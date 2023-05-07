@@ -9,7 +9,7 @@ import styles from './StyleSheet';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 
-const TaskListPage = () => {
+const TaskListPage = ({ navigation }: { navigation: any }) => {
 
   const [tasks, setTasks] = useState<{
     name: string;
@@ -52,14 +52,17 @@ const TaskListPage = () => {
               return { name, priority, date, time: `${time.hours}:${time.minutes}`, key };
             });
 
+            const sortedTasks = tasksWithKeys.sort((a, b) => {
+              const dateA = new Date(a.date).getTime();
+              const dateB = new Date(b.date).getTime();
+              return dateA - dateB;
+            });
+    
             setTasks(tasksWithKeys);
           }
         });
-      } else {
-        console.log('User not authenticated');
       }
     } catch (error) {
-      console.log('ERROR!', error);
     }
   };
 
@@ -73,13 +76,9 @@ const TaskListPage = () => {
       if (user) {
         const taskRef = ref(database, `users/${user.uid}/tasks/${key}`);
         await remove(taskRef);
-        console.log(`Task with key ${key} was successfully deleted.`);
         setTasks(tasks.filter((task) => task.key !== key));
-      } else {
-        console.log('User not authenticated');
       }
     } catch (error) {
-      console.error(`Error deleting task with key ${key}:`, error);
     }
   };
 
@@ -98,9 +97,16 @@ const TaskListPage = () => {
     setIsModalVisible(false);
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  const handleEditTask = (task: {
+    name: string;
+    priority: string;
+    date: string;
+    time: string;
+    key: string;
+  }) => {
+    navigation.navigate('Add Task', { screen: 'AddTaskPage', params: { task } });
+  };
+  
 
   const renderTaskItem = ({
     item,
@@ -113,14 +119,34 @@ const TaskListPage = () => {
       key: string;
     };
   }) => (
-    <TouchableOpacity style={styles.taskItem} onPress={() => openTaskDetails(item)}>
-      <Text style={styles.taskName}>{item.name}</Text>
-      <IconButton
-        icon={() => <Ionicons name='trash-outline' size={24} color='black' />}
-        onPress={() => deleteTask(item.key)}
-      />
-    </TouchableOpacity>
+<TouchableOpacity
+  style={styles.taskItem}
+  onPress={() => openTaskDetails(item)}
+>
+  <Text
+    style={[
+      styles.taskName,
+      item.priority === 'high' && styles.highPriorityTaskText, 
+    ]}
+  >
+    {item.name}
+  </Text>
+  <View style={styles.flatListButton}>
+    <IconButton
+      icon={() => <Ionicons name='create-outline' size={24} color='black' />}
+      onPress={() => handleEditTask(item)}
+    />
+    <IconButton
+      icon={() => <Ionicons name='trash-outline' size={24} color='black' />}
+      onPress={() => deleteTask(item.key)}
+    />
+  </View>
+</TouchableOpacity>
   );
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
   
   return (
     <View style={styles.taskListContainer}>

@@ -107,6 +107,14 @@ const TaskListPage = ({ navigation }: { navigation: any }) => {
     navigation.navigate('Add Task', { screen: 'AddTaskPage', params: { task } });
   };
   
+  const handleDoneTask = () => {
+    if (selectedTask) {
+      deleteTask(selectedTask.key);
+      closeModal();
+    }
+  };
+
+
 
   const renderTaskItem = ({
     item,
@@ -163,9 +171,14 @@ const TaskListPage = ({ navigation }: { navigation: any }) => {
             <Text style={styles.modalSubtitle}>Priority: {selectedTask.priority}</Text>
             <Text style={styles.modalSubtitle}>Date: {selectedTask.date}</Text>
             <Text style={styles.modalSubtitle}>Time: {selectedTask.time}</Text>
+            <View style={styles.modalButtonsContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleDoneTask}>
+              <Text style={styles.closeButtonText}>Done</Text>
+              </TouchableOpacity>
             <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
+          </View>
           </View>
         )}
       </Modal>

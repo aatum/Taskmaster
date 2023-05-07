@@ -139,7 +139,13 @@ const styles = StyleSheet.create({
     },  
       highPriorityTaskText: {
         color: 'red',
-      },
+  },
+    modalButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+},
+
 });
 
 export default styles;

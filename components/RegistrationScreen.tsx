@@ -31,11 +31,9 @@ export default function RegistrationScreen({ navigation }: { navigation: any }) 
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(`User registered successfully: ${userCredential.user.email}`);
       navigation.navigate('Login');
       showDialog();
     } catch (error) {
-      console.log('Error registering user:', error);
       showDialog();
     }
   };

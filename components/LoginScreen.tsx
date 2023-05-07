@@ -20,10 +20,8 @@ export default function LoginScreen({ navigation, onLoginSuccess }: { navigation
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('User logged in:', userCredential.user.email);
       onLoginSuccess(true);
     } catch (error) {
-      console.log('Error logging in:', error);
       showDialog();
     }
   };

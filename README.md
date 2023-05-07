@@ -4,7 +4,7 @@ This is a simple task management app built with React Native, React Navigation a
 
 ## Installation
 
-1. Install Expo from App Store or Google Play Store if don't already have it.
+1. Install Expo from App Store or Google Play Store if you don't have it already.
 
 2. Clone the repository to your your local machine with the following command: 
 ```

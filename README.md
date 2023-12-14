@@ -30,6 +30,12 @@ npx expo start
 - View a list of tasks with options to mark them as complete or delete them.
 - Log out with your user.
 
+## Screenshots
+
+![IMG_6147](https://github.com/aatum/Taskmaster/assets/112404201/b08e82da-b3e2-4140-b433-e78edad58a3c)
+![IMG_6148](https://github.com/aatum/Taskmaster/assets/112404201/3b17ff66-6df1-47f0-8816-c27d7c9f0fd3)
+![IMG_6149](https://github.com/aatum/Taskmaster/assets/112404201/3299cb52-7cb4-4f7b-a9a8-de6dd437068c)
+
 ## Dependencies
 
 * React
@@ -40,3 +46,4 @@ npx expo start
 * Firebase Realtime Database
 * Firebase Authentication
 * @expo/vector-icons
+
